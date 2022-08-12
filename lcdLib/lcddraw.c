@@ -94,25 +94,26 @@ void drawChar11x16(u_char rcol, u_char rrow, char c,
   }
 }
 
-/* Dey made draw font size */
-void drawChar8x12(u_char rcol, u_char rrow, char c, 
+/*Dey made draw font size */
+voiddrawChar8x12(u_char rcol, u_char rrow, char c, 
      u_int fgColorBGR, u_int bgColorBGR) 
 {
   u_char col = 0;
   u_char row = 0;
-  unsigned long bit = 0x0001;
+  u_char bit = 0;
   u_char oc = c - 0x20;
 
-  lcd_setArea(rcol, rrow, rcol + 11, rrow + 8); /* relative to requested col/row */
-  while (row < 9) {
-    while (col < 12) {
+  lcd_setArea(rcol, rrow, rcol + 7, rrow + 12); /*relative to requested col/row */
+  while(col < 12) {
+    bit = 1 << 7;
+    while(row < 8 {
       u_int colorBGR = (font_8x12[oc][col] & bit) ? fgColorBGR : bgColorBGR;
       lcd_writeColor(colorBGR);
-      col++;
+      bit <<= 1;
+      row++;
     }
-    col = 0;
-    bit <<= 1;
-    row++;
+    row = 0;
+    col++;
   }
 }
 
