@@ -106,7 +106,7 @@ voiddrawChar8x12(u_char rcol, u_char rrow, char c,
   lcd_setArea(rcol, rrow, rcol + 7, rrow + 12); /*relative to requested col/row */
   while(col < 12) {
     bit = 1 << 7;
-    while(row < 8 {
+    while(row < 8) {
       u_int colorBGR = (font_8x12[oc][col] & bit) ? fgColorBGR : bgColorBGR;
       lcd_writeColor(colorBGR);
       bit <<= 1;
