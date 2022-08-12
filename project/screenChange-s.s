@@ -8,10 +8,10 @@
 jt:	.word case1
 	.word case2
 	.word case3
-
+	.word default
 
 screenChange:
-	cmp #3, &colorRotation 	; 3-colorRotation
+	cmp &colorRotation, #3 	;3-colorRotation
 	jnc default
 
 	mov &colorRotation, r12
