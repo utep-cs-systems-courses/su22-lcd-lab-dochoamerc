@@ -3,6 +3,7 @@
 #include "switches.h"
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "screenChange.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 
@@ -12,36 +13,11 @@ short redrawScreen = 1;
 u_int background = COLOR_MAGENTA;
 u_int letters = COLOR_KHAKI;
 unsigned char step = 0;
+static char colorRotation = 0;
 
 // axis zero for col, axis 1 for row
 short drawPos[2] = {1,10}, controlPos[2] = {2, 10};
 short colVelocity = 1, colLimits[2] = {1, screenWidth/2};
-
-void screenChange() {
-   static char colorRotation = 0;
-    switch(colorRotation){
-    case 0:
-      colorRotation++;
-      background = COLOR_RED;
-      letters = COLOR_DEEP;
-      break;
-    case 1:
-      colorRotation++;
-      background = COLOR_DARK_GREEN;
-      letters = COLOR_LIME_GREEN;
-      break;
-    case 2:
-      colorRotation++;
-      background = COLOR_BLUE;
-      letters = COLOR_AQUAMARINE;
-      break;
-    case 3:
-      colorRotation = 0;
-      background = COLOR_PURPLE;
-      letters = COLOR_HOT_PINK;
-      break;
-    }
- }
 
 static int button = 0;
 void wdt_c_handler()

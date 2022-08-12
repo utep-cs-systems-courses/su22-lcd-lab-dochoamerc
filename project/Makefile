@@ -1,24 +1,31 @@
 # makfile configuration
-COMMON_OBJECTS  = moveball.o switches.o wdt_handler.o
+COMMON_OBJECTS  = toyArrows.o switches.o wdt_handler.o
 CPU            	= msp430g2553
 CFLAGS         	= -mmcu=${CPU} -Os -I./h
 LDFLAGS		= -L./lib -L/opt/ti/msp430_gcc/include/
 
 #switch the compiler (for the internal make rules)
-CC              = msp430-elf-gcc
+CC              = msp430-elf-gcc 
 AS              = msp430-elf-gcc -mmcu=${CPU} -c
 
 all:
 	(cd timerLib; make install)
 	(cd lcdLib; make install)
-	(make moveball.elf)
+	(make toyArrows-c.elf)
+#	(make toyArrows-s.elf)
 
 #rule
-moveball.elf: ${COMMON_OBJECTS} 
+toyArrows-c.elf: ${COMMON_OBJECTS} screenChange-c.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
-load: moveball.elf
-	msp430loader.sh  $^
+#toyArrows-s.elf: ${COMMON_OBJECTS} screenChange-s.o
+#	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
+
+#load-s: toyArrows-s.elf
+#	msp430loader.sh $^
+
+load-c: toyArrows-c.elf
+	msp430loader.sh $^
 
 clean:
 	(cd timerLib; make clean)
@@ -28,4 +35,5 @@ clean:
 
 
 switches.c: switches.h
-makeball.c: switches.h
+toyArrows.c: switches.h
+screenChange-s.s: screenChange.h
