@@ -51,8 +51,7 @@ void clearScreen(u_int colorBGR)
 /** 5x7 font - this function draws background pixels
  *  Adapted from RobG's EduKit
  */
-void drawChar5x7(u_char rcol, u_char rrow, char c, 
-     u_int fgColorBGR, u_int bgColorBGR) 
+void drawChar5x7(u_char rcol, u_char rrow, char c, u_int fgColorBGR, u_int bgColorBGR) 
 {
   u_char col = 0;
   u_char row = 0;
@@ -95,21 +94,19 @@ void drawChar11x16(u_char rcol, u_char rrow, char c,
 }
 
 /* Dey made draw font size */
-void drawChar8x12(u_char rcol, u_char rrow, char c, 
-     u_int fgColorBGR, u_int bgColorBGR) 
+void drawChar8x12(u_char rcol, u_char rrow, char c, u_int fgColorBGR, u_int bgColorBGR) 
 {
   u_char col = 0;
   u_char row = 0;
-  u_char bit = 0;
+  u_char bit = 0x01;
   u_char oc = c - 0x20;
 
   lcd_setArea(rcol, rrow, rcol + 7, rrow + 12); /* relative to requested col/row */
   while (col < 12) {
-    bit = 1 << 7;
     while (row < 8) {
+      bit = 1 << (7-row);
       u_int colorBGR = (font_8x12[oc][col] & bit) ? fgColorBGR : bgColorBGR;
       lcd_writeColor(colorBGR);
-      bit <<= 1;
       row++;
     }
     row = 0;

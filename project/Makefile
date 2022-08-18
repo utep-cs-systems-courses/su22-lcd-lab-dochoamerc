@@ -12,17 +12,17 @@ all:
 	(cd timerLib; make install)
 	(cd lcdLib; make install)
 	(make toyArrows-c.elf)
-#	(make toyArrows-s.elf)
+	(make toyArrows-s.elf)
 
 #rule
 toyArrows-c.elf: ${COMMON_OBJECTS} screenChange-c.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
-#toyArrows-s.elf: ${COMMON_OBJECTS} screenChange-s.o
-#	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
+toyArrows-s.elf: ${COMMON_OBJECTS} screenChange-s.o
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
-#load-s: toyArrows-s.elf
-#	msp430loader.sh $^
+load-s: toyArrows-s.elf
+	msp430loader.sh $^
 
 load-c: toyArrows-c.elf
 	msp430loader.sh $^
@@ -36,4 +36,4 @@ clean:
 
 switches.c: switches.h
 toyArrows.c: switches.h
-screenChange-s.s: screenChange.h
+screenChange-s.o: screenChange-s.s

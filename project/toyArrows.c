@@ -13,28 +13,15 @@ short redrawScreen = 1;
 u_int background = COLOR_MAGENTA;
 u_int letters = COLOR_KHAKI;
 unsigned char step = 0;
-static char colorRotation = 0;
-
-// axis zero for col, axis 1 for row
-short drawPos[2] = {1,10}, controlPos[2] = {2, 10};
-short colVelocity = 1, colLimits[2] = {1, screenWidth/2};
-
+short colorRotation = 0;
 static int button = 0;
+
 void wdt_c_handler()
 {
   static int secCount = 0;
 
   secCount ++;
   if (secCount >= 25) {/* 10/sec */
-    {/* move ball */
-      short oldCol = controlPos[0];
-      short newCol = oldCol + colVelocity;
-      if (newCol <= colLimits[0] || newCol >= colLimits[1])
-	colVelocity = -colVelocity;
-      else
-	controlPos[0] = newCol;
-    }
-
     {// update screen 
       if (switches & SW3) {
 	button = 3;
@@ -44,8 +31,7 @@ void wdt_c_handler()
       if (switches & SW2) {
 	button = 2;
 	step = 0;
-	drawString11x16(1,1, "2 IS BAD", COLOR_RED, COLOR_WHITE);
-	clearScreen(COLOR_WHITE);
+	clearScreen(background);
       }   
       if (switches & SW1) {
 	button = 1;

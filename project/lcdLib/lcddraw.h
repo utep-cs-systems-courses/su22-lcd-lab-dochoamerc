@@ -50,6 +50,9 @@ void drawString11x16(u_char col, u_char row, char *string,
 void drawString8x12(u_char col, u_char row, char *string, 
 		   u_int fgColorBGR, u_int bgColorBGR);
 
+void drawString12x8(u_char col, u_char row, char *string, 
+		   u_int fgColorBGR, u_int bgColorBGR);
+
 
 /** 5x7 font - this function draws background pixels
  *  Adapted from RobG's EduKit
